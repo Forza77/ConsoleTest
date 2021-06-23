@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace ConsoleTest
 {
@@ -28,7 +29,7 @@ namespace ConsoleTest
                         {
                             var dbEditModel = modelBuilder.CreateModel<DataBaseEditModel>();
                             Console.WriteLine("Введите путь к файлу");
-                            var path = Console.ReadLine();
+                            var path = Console.ReadLine().Trim('"');
                             try
                             {
                                 var file = File.ReadAllLines(path, Encoding.UTF8);
@@ -56,13 +57,13 @@ namespace ConsoleTest
                 ConsoleKeyInfo keyInfo;
                 while (true)
                 {
-                    
+
                     keyInfo = Console.ReadKey(true);
                     if (keyInfo.Key == ConsoleKey.Escape) break;
                     else if (keyInfo.Key == ConsoleKey.Enter)
                     {
                         if (builder.Length == 0) break;
-                        else 
+                        else
                         {
                             list.Add(new Word() { Value = builder.ToString() });
                             Console.WriteLine();
@@ -73,12 +74,12 @@ namespace ConsoleTest
                     else if (keyInfo.Key == ConsoleKey.Backspace)
                     {
                         if (builder.Length == 0) continue;
-                        else 
-                        { 
+                        else
+                        {
                             builder.Remove(builder.Length - 1, 1);
                             Console.Clear();
                             if (list.Count != 0) list.ForEach(w => Console.WriteLine(w.Value));
-                            Console.Write(builder.ToString()); 
+                            Console.Write(builder.ToString());
                         }
                     }
                     else if (keyInfo.Key == ConsoleKey.Spacebar)

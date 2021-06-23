@@ -43,19 +43,19 @@ namespace ConsoleTest.Models
         }
         public void AddAndUpdateDataBase(List<Word> list)
         {
-            var dbWords = dbRepository.GetWords;
+            var dbWords = dbRepository.GetWordsAsync().Result;
             foreach (var word in list)
             {
                 var dbWord = dbWords.FirstOrDefault(w => w.Value == word.Value);
                 if (dbWord == null) dbRepository.Add(word);
                 else dbRepository.Update(dbWord.Id, word);
             }
-            dbRepository.Save();
+            dbRepository.SaveAsync().Wait();
         }
         public void DeleteWordsOnDataBase()
         {
-            dbRepository.Delete();
-            dbRepository.Save();
+            dbRepository.DeleteAsync().Wait();
+            dbRepository.SaveAsync().Wait();
         }
     }
 }

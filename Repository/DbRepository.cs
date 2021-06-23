@@ -16,7 +16,7 @@ namespace ConsoleTest.Repository
         {
             this.dataBaseContext = dataBaseContext;
         }
-        public void Add(List<Word> List)=> dataBaseContext.AddRange(List);
+        public async Task AddAsync(List<Word> List)=> await Task.Run(()=>dataBaseContext.AddRange(List));
         public void Add(Word word) => dataBaseContext.Add(word);
         public void Update(int id,Word word)
         {
@@ -24,12 +24,21 @@ namespace ConsoleTest.Repository
             updateWord.Count += word.Count;
         }
 
-        public void Delete()
+        public async Task DeleteAsync()
         {
-            foreach (var word in dataBaseContext.Words) dataBaseContext.Words.Remove(word);
+            await Task.Run(() => 
+            { 
+                foreach (var word in dataBaseContext.Words) dataBaseContext.Words.Remove(word); 
+            });
         }
 
-        public IEnumerable<Word> GetWords { get {return dataBaseContext.Words; } }
-        public void Save() => dataBaseContext.SaveChanges();
+        public async Task<IEnumerable<Word>> GetWordsAsync()
+        {
+            return await Task.Run(()=>dataBaseContext.Words); 
+        }
+        public async Task SaveAsync() 
+        { 
+            await Task.Run(() => dataBaseContext.SaveChangesAsync()); 
+        }
     }
 }

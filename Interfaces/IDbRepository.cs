@@ -9,11 +9,11 @@ namespace ConsoleTest.Interfaces
 {
     public interface IDbRepository
     {
-        public IEnumerable<Word> GetWords { get; }
-        public void Delete();
-        public void Add(List<Word> newList);
+        public Task<IEnumerable<Word>> GetWordsAsync();
+        public Task DeleteAsync();
+        public Task AddAsync(List<Word> newList);
         public void Add(Word word);
         public void Update(int id, Word word);
-        public void Save();
+        public Task SaveAsync();
     }
 }
